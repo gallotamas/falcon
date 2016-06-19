@@ -1,0 +1,18 @@
+<div class="publish-card-wide mdl-card mdl-shadow--2dp">
+  <div class="mdl-card__media">
+    <img [src]="publishingItem.content.media.url">
+  </div>
+  <div class="mdl-card__supporting-text">
+    {{publishingItem.content.message}}
+  </div>
+  <div class="mdl-card__actions mdl-card--border">
+    <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+      Edit
+    </a>
+  </div>
+  <div class="mdl-card__menu">
+    <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-js-ripple-effect mdl-button--accent">
+      <i class="material-icons">delete</i>
+    </button>
+  </div>
+</div>

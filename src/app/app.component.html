@@ -1,3 +1,9 @@
-<h1>
-  {{title}}
-</h1>
+<nav>
+  <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+    <div class="mdl-tabs__tab-bar">
+      <a class="mdl-tabs__tab" [routerLink]="['/publish']">Publish</a>
+      <!--<a class="mdl-tabs__tab" [routerLink]="['/reach-graph']">Reach graph</a>-->
+    </div>
+  </div>
+</nav>
+<router-outlet></router-outlet>

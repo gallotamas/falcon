@@ -6,12 +6,14 @@
     {{publishingItem.content.message}}
   </div>
   <div class="mdl-card__actions mdl-card--border">
-    <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+    <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
+      [routerLink]="['/publish', publishingItem.id]">
       Edit
     </a>
   </div>
   <div class="mdl-card__menu">
-    <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-js-ripple-effect mdl-button--accent">
+    <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-js-ripple-effect mdl-button--accent"
+      (click)="delete()">
       <i class="material-icons">delete</i>
     </button>
   </div>

@@ -1,6 +1,8 @@
 var Promise = require('promise');
 var fs = require('fs');
-var publishingItems;
+var _ = require('lodash');
+
+var publishingItems = {};
 
 /**
  * Represent an in memory repository.
@@ -8,13 +10,45 @@ var publishingItems;
 class Repository {
 
     /**
-     * Gets all the publishing items.
+     * Init repository.
      */
+    constructor() {
+        console.log('Initializing repository...');
+        readPublishingItems();
+        console.log('Publishing items are loaded.');
+    }
+
+     /**
+      * Gets all the publishing items.
+      */
      getPublishingItems() {
-         if (!publishingItems) {
-             return readPublishingItems();
-         }
-         return Promise.resolve(publishingItems);
+         return _.values(publishingItems);
+     }
+
+     /**
+      * Gets the publishing item with the id provided.
+      * @param id - The id of the publishing item.
+      */
+     getPublishingItem(id) {
+         return publishingItems[id];
+     }
+
+     /**
+      * Updates a publishing item.
+      * @param id - The id of the publishing item.
+      * @param publishingItem - The new publishing item. 
+      */
+     updatePublishingItem(id, publishingItem) {
+         publishingItems[id] = publishingItem;
+         return publishingItem;
+     }
+
+     /**
+      * Deletes the publishing item with the id provided.
+      * @param id - The id of the publishing item.
+      */
+     deletePublishingItem(id) {
+         delete publishingItems[id];
      }
 }
 
@@ -31,9 +65,10 @@ function readFile(path) {
 }
 
 function readPublishingItems() {
-    return readFile(__dirname + '/../data/publishing-items.json').then((res) => {
-        publishingItems = res;
-        return res;
+    readFile(__dirname + '/../data/publishing-items.json').then((items) => {
+        _.forEach(items, (item) => {
+            publishingItems[item.id] = item;
+        });
     });
 }
 

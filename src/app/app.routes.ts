@@ -1,9 +1,9 @@
 import { provideRouter, RouterConfig } from '@angular/router';
 
-import { PublishListComponent }  from './publish/publish-list';
+import { PUBLISH_ROUTES }  from './publish/publish.routes';
 
 export const routes: RouterConfig = [
-  { path: '/publish', component: PublishListComponent },
+  ...PUBLISH_ROUTES
 ];
 
 export const APP_ROUTER_PROVIDERS = [

@@ -36,6 +36,7 @@ const barrels: string[] = [
   'app/publish',
   'app/publish/publish-list',
   'app/publish/publish-card',
+  'app/publish/edit-publish-item',
   /** @cli-barrel */
 ];
 

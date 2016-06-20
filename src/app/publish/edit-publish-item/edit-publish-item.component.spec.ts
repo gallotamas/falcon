@@ -10,12 +10,12 @@ import {
   async, inject
 } from '@angular/core/testing';
 
-import { PublishListComponent } from './publish-list.component';
+import { EditPublishItemComponent } from './edit-publish-item.component';
 
-// TODO: write tests
-// describe('Component: PublishList', () => {
+// TODO: write tests.
+// describe('Component: EditPublishItem', () => {
 //   it('should create an instance', () => {
-//     let component = new PublishListComponent();
+//     let component = new EditPublishItemComponent();
 //     expect(component).toBeTruthy();
 //   });
 // });

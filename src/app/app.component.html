@@ -1,9 +1,18 @@
-<nav>
-  <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
-    <div class="mdl-tabs__tab-bar">
-      <a class="mdl-tabs__tab" [routerLink]="['/publish']">Publish</a>
-      <!--<a class="mdl-tabs__tab" [routerLink]="['/reach-graph']">Reach graph</a>-->
+<div class="app mdl-layout mdl-js-layout mdl-layout--fixed-header">
+  <header class="mdl-layout__header mdl-layout__header--scroll mdl-color--primary">
+    <div class="mdl-layout__header-row">
+      <img class="falcon-logo" src="/falcon-logo.png" alt="falcon logo">
+      <h3>Falcon</h3>
+      <div class="mdl-layout-spacer"></div>
+      <nav>
+        <a class="mdl-navigation__link" [routerLink]="['/publish']">Publish</a>
+        <a class="mdl-navigation__link">Reach graph</a>
+      </nav>
     </div>
-  </div>
-</nav>
-<router-outlet></router-outlet>
+  </header>
+  <main class="mdl-layout__content">
+    <div class="page-content">
+    <router-outlet></router-outlet>
+    </div>
+  </main>
+</div>

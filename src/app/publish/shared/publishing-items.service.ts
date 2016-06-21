@@ -19,7 +19,7 @@ export class PublishingItemsService {
    */
   public getAll(): Observable<PublishingItem[]> {
     return this._http.get(this._baseUrl)
-      .map((response: Response) => <PublishingItem[]>response.json())
+      .map(this.mapData)
       .catch(this.handleError);
   }
 
@@ -29,7 +29,17 @@ export class PublishingItemsService {
    */
   public get(id: string): Observable<PublishingItem> {
     return this._http.get(this._baseUrl + id)
-      .map((response: Response) => <PublishingItem>response.json())
+      .map(this.mapData)
+      .catch(this.handleError);
+  }
+
+  /**
+   * Creates a publishing item.
+   * @param item - The publishing item to create.
+   */
+  public post(item: PublishingItem) {
+    return this._http.post(this._baseUrl, JSON.stringify(item), this._requestOptions)
+      .map(this.mapData)
       .catch(this.handleError);
   }
 
@@ -39,7 +49,7 @@ export class PublishingItemsService {
    */
   public put(item: PublishingItem) {
     return this._http.put(this._baseUrl + item.id, JSON.stringify(item), this._requestOptions)
-      .map((response: Response) => <PublishingItem>response.json())
+      .map(this.mapData)
       .catch(this.handleError);
   }
 
@@ -55,9 +65,13 @@ export class PublishingItemsService {
       .subscribe(() => {});
   }
 
+  private mapData(response: Response) {
+    return <PublishingItem>response.json();
+  }
+
   private handleError(error: Response) {
     console.error(error);
-    return Observable.throw(error.json());
+    return Observable.throw(error);
   }
 
 }

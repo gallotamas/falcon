@@ -1,4 +1,5 @@
 var Promise = require('promise');
+var shortid = require('shortid');
 var fs = require('fs');
 var _ = require('lodash');
 
@@ -34,9 +35,20 @@ class Repository {
      }
 
      /**
+      * Creates a publishing item.
+      * @param publishingItem - The new publishing item. 
+      */
+     createPublishingItem(publishingItem) {
+         let id = shortid.generate();
+         publishingItem.id = id;
+         publishingItems[id] = publishingItem;
+         return publishingItem;
+     }
+
+     /**
       * Updates a publishing item.
       * @param id - The id of the publishing item.
-      * @param publishingItem - The new publishing item. 
+      * @param publishingItem - The updated publishing item. 
       */
      updatePublishingItem(id, publishingItem) {
          publishingItems[id] = publishingItem;

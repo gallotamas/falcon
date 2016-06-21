@@ -1,3 +1,14 @@
-<div *ngFor="let publishingItem of publishingItems">
-  <app-publish-card [publishingItem]="publishingItem"></app-publish-card>
+<!-- Display items in card layout. -->
+<div class="mdl-grid">
+  <div class="mdl-cell mdl-cell--4-col" *ngFor="let publishingItem of publishingItems">
+    <app-publish-card [publishingItem]="publishingItem"></app-publish-card>
+  </div>
+</div>
+  
+<!-- Floating action button. -->
+<div>
+  <button class="add-button mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored"
+    (click)="onAddClicked()">
+    <i class="material-icons">add</i>
+  </button>
 </div>

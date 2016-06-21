@@ -16,7 +16,7 @@
   <div>
     <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
       [disabled]="!publishForm.form.valid">
-      Update
+      {{isNewItem ? 'Create' : 'Update'}}
     </button>
     <button type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
       (click)="navigateToPublishPage()">

@@ -52,7 +52,8 @@ app.get('/api/publishing-items/:id', function(req, res) {
 });
 
 app.post('/api/publishing-items', function(req, res) {
-    res.send('Got a POST request at /publishing-items/');
+    var createdItem = repository.createPublishingItem(req.body);
+    res.send(createdItem);
 });
 
 app.put('/api/publishing-items/:id', function(req, res) {

@@ -2,10 +2,11 @@
 <html>
 <head>
   <!-- Set the base href -->
-  <base href=".">
+  <!-- Even though the official documentation says that you should provide `.`
+  the routing will not work properly unless you use '/'. It makes sense after all. -->
+  <base href="/">
   <meta charset="utf-8">
   <title>Falcon</title>
-  <base href="/">
 
   {{#unless environment.production}}
   <!-- Live reload can be enabled here, but for now it only works with `ng serve` so don't use it. -->
@@ -17,7 +18,7 @@
   <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.teal-deep_purple.min.css" />
   <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
 </head>
-<body>
+<body class="mdl-color--grey-100 mdl-color-text--grey-700 mdl-base">
   <app-root>Loading...</app-root>
 
   

@@ -15,6 +15,8 @@ export class EditPublishItemComponent implements OnInit, OnDestroy {
 
   private _routeParamSubscription;
 
+  isNewItem: boolean;
+
   // empty object is required for proper data binding.
   publishingItem = PublishingItem.createEmptyObject();
 
@@ -30,8 +32,12 @@ export class EditPublishItemComponent implements OnInit, OnDestroy {
     // url parameters are available through an observable.
     this._routeParamSubscription = this._activatedRoute.params.subscribe(params => {
       let id = params['id'];
+      if (!id) {
+        this.isNewItem = true;
+      } else {
       this._publishingItemsService.get(id)
         .subscribe(publishingItem => this.publishingItem = publishingItem);
+      }
    });
   }
 
@@ -41,11 +47,17 @@ export class EditPublishItemComponent implements OnInit, OnDestroy {
   }
 
   public onSubmit() {
-    this._publishingItemsService.put(this.publishingItem)
-      .subscribe(publishingItem => {
-        this.publishingItem = publishingItem;
-        this.navigateToPublishPage();
-      });
+    if (this.isNewItem) {
+      this._publishingItemsService.post(this.publishingItem)
+        .subscribe(publishingItem => {
+          this.navigateToPublishPage();
+        });
+    } else {
+      this._publishingItemsService.put(this.publishingItem)
+        .subscribe(publishingItem => {
+            this.navigateToPublishPage();
+          });
+    }
   }
 
   public navigateToPublishPage() {

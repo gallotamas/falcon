@@ -3,7 +3,9 @@ var path = require('path');
 var fs = require('fs');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
+var socketio = require('socket.io');
 var Repository = require('./server/repository');
+var SocketService = require('./server/socket-service');
 
 var app = express();
 var staticRoot = __dirname + '/dist/';
@@ -34,12 +36,14 @@ app.use(function(req, res, next){
     }
 
     fs.createReadStream(staticRoot + 'index.html').pipe(res);
-
 });
 
-app.listen(app.get('port'), function() {
+var server = app.listen(app.get('port'), function() {
     console.log('app running on port', app.get('port'));
 });
+
+var io = socketio.listen(server);
+var socketService = new SocketService(io);
 
 app.get('/api/publishing-items', function(req, res) {
     var publishingItems = repository.getPublishingItems();
@@ -53,15 +57,18 @@ app.get('/api/publishing-items/:id', function(req, res) {
 
 app.post('/api/publishing-items', function(req, res) {
     var createdItem = repository.createPublishingItem(req.body);
+    socketService.emitCreatedPublishingItem(createdItem);
     res.send(createdItem);
 });
 
 app.put('/api/publishing-items/:id', function(req, res) {
     var updatedItem = repository.updatePublishingItem(req.params.id, req.body);
+    socketService.emitUpdatedPublishingItem(updatedItem);
     res.send(updatedItem);
 });
 
 app.delete('/api/publishing-items/:id', function(req, res) {
     repository.deletePublishingItem(req.params.id);
+    socketService.emitDeletedPublishingItem(req.params.id);
     res.send();
 });

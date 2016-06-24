@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import * as _ from 'lodash';
 import { PublishCardComponent } from '../publish-card';
 import { PublishingItemsService } from '../shared/publishing-items.service';
 import { PublishingItem } from '../shared/publishing-item';
+import { PublishSocketService } from '../shared/publish-socket.service';
 
 declare var componentHandler: any;
 
@@ -11,15 +13,17 @@ declare var componentHandler: any;
   selector: 'app-publish-list',
   templateUrl: 'publish-list.component.html',
   styleUrls: ['publish-list.component.css'],
-  directives: [PublishCardComponent]
+  directives: [PublishCardComponent],
+  providers: [PublishSocketService]
 })
-export class PublishListComponent implements OnInit {
+export class PublishListComponent implements OnInit, OnDestroy {
 
   publishingItems: PublishingItem[];
 
   constructor(
     private _router: Router,
-    private _publishingItemsService: PublishingItemsService) {}
+    private _publishingItemsService: PublishingItemsService,
+    private _publishSocketService: PublishSocketService) {}
 
   ngOnInit() {
     // init material design lite components.
@@ -27,6 +31,25 @@ export class PublishListComponent implements OnInit {
 
     this._publishingItemsService.getAll()
       .subscribe(publishingItems => this.publishingItems = publishingItems);
+
+    this._publishSocketService.connect('/publish');
+
+    // Subscribe to change events (create/update/delete)
+    this._publishSocketService.created()
+      .subscribe(publishingItem => this.publishingItems.push(publishingItem));
+    this._publishSocketService.updated()
+      .subscribe(publishingItem =>  {
+        let index = _.findIndex(this.publishingItems, item => item.id === publishingItem.id);
+        if (index !== -1) {
+          this.publishingItems[index] = publishingItem;
+        }
+      });
+    this._publishSocketService.deleted()
+      .subscribe(id => _.remove(this.publishingItems, item => item.id === id));
+  }
+
+  ngOnDestroy() {
+    this._publishSocketService.disconnect();
   }
 
   public onAddClicked() {

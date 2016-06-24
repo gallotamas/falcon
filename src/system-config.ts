@@ -7,6 +7,8 @@
  **********************************************************************************************/
 /** Map relative paths to URLs. */
 const map: any = {
+  'socket.io-client': 'socket.io/socket.io.js',
+  'lodash': 'vendor/lodash/lodash.min.js'
 };
 
 /** User packages configuration. */

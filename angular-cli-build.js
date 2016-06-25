@@ -16,7 +16,8 @@ module.exports = function(defaults) {
       'reflect-metadata/**/*.+(ts|js|js.map)',
       'rxjs/**/*.+(js|js.map)',
       '@angular/**/*.+(js|js.map)',
-      'lodash/lodash.min.js'
+      'lodash/lodash.min.js',
+      'd3/d3.min.js'
     ]
   });
 };

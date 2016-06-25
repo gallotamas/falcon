@@ -1,10 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import * as _ from 'lodash';
-import { PublishCardComponent } from '../publish-card';
-import { PublishingItemsService } from '../shared/publishing-items.service';
-import { PublishingItem } from '../shared/publishing-item';
-import { PublishSocketService } from '../shared/publish-socket.service';
+import { PublishCardComponent } from '../publish-card/index';
+import { PublishingItemsService, PublishingItem, PublishSocketService } from '../shared/index';
 
 declare var componentHandler: any;
 
@@ -32,11 +30,11 @@ export class PublishListComponent implements OnInit, OnDestroy {
     this._publishingItemsService.getAll()
       .subscribe(publishingItems => this.publishingItems = publishingItems);
 
-    this._publishSocketService.connect('/publish');
-
-    // Subscribe to change events (create/update/delete)
+    // Subscribe to the create event.
     this._publishSocketService.created()
       .subscribe(publishingItem => this.publishingItems.push(publishingItem));
+
+    // Subscribe to the update event.
     this._publishSocketService.updated()
       .subscribe(publishingItem =>  {
         let index = _.findIndex(this.publishingItems, item => item.id === publishingItem.id);
@@ -44,6 +42,8 @@ export class PublishListComponent implements OnInit, OnDestroy {
           this.publishingItems[index] = publishingItem;
         }
       });
+
+    // Subscribe to the delete event.
     this._publishSocketService.deleted()
       .subscribe(id => _.remove(this.publishingItems, item => item.id === id));
   }

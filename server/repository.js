@@ -3,10 +3,11 @@ var shortid = require('shortid');
 var fs = require('fs');
 var _ = require('lodash');
 
-var publishingItems = {};
+var publishingItems = {};   // Use an object as an associative array (map).
+var reachData;
 
 /**
- * Represent an in memory repository.
+ * Represents an in memory repository.
  */
 class Repository {
 
@@ -17,6 +18,8 @@ class Repository {
         console.log('Initializing repository...');
         readPublishingItems();
         console.log('Publishing items are loaded.');
+        readReachData();
+        console.log('Reach data loaded.');
     }
 
      /**
@@ -62,6 +65,48 @@ class Repository {
      deletePublishingItem(id) {
          delete publishingItems[id];
      }
+
+     /**
+      * Gets impressions grouped by timestamp.
+      */
+     getImpressions() {
+         let impressions = [];
+         _(reachData)
+            .filter(reach => { return reach.post_impressions; })  // filter out invalid values.
+            .forEach(reach => {
+                // find the data item with this timestamp.
+                var existingImpression = _.find(impressions, (impression) => {
+                        return impression.timestamp === reach.post_impressions[0].timestamp;
+                    });
+
+                if (existingImpression) {
+                    // update data item (sum values).
+                    existingImpression.total += _.parseInt(reach.post_impressions[0].value);
+                    existingImpression.organic += _.parseInt(reach.post_impressions_organic[0].value);
+                    existingImpression.viral += _.parseInt(reach.post_impressions_viral[0].value);
+                    existingImpression.paid += _.parseInt(reach.post_impressions_paid[0].value);
+                } else {
+                    // create a new data item.
+                    impressions.push(convertReachItemToImpression(reach));
+                }
+            });
+         return _.sortBy(impressions, 'timestamp');
+     }
+
+     /**
+      * Adds a new impression to the repository.
+      */
+     addImpression(impression) {
+         reachData.push(convertImpressionToReachItem(impression));
+     }
+
+     getLatestImpression() {
+         var latest = _(reachData)
+            .filter(item => { return item.post_impressions; })  // filter out invalid values.
+            .maxBy(item => item.post_impressions[0].timestamp);
+        
+        return latest ? convertReachItemToImpression(latest) : null;
+     }
 }
 
 function readFile(path) {
@@ -82,6 +127,31 @@ function readPublishingItems() {
             publishingItems[item.id] = item;
         });
     });
+}
+
+function readReachData() {
+    readFile(__dirname + '/../data/reach.json').then(items => {
+        reachData = items;
+    });
+}
+
+function convertReachItemToImpression(reachItem) {
+    return {
+        timestamp: reachItem.post_impressions[0].timestamp,
+        total: _.parseInt(reachItem.post_impressions[0].value),
+        organic: _.parseInt(reachItem.post_impressions_organic[0].value),
+        viral: _.parseInt(reachItem.post_impressions_viral[0].value),
+        paid: _.parseInt(reachItem.post_impressions_paid[0].value)
+    }
+}
+
+function convertImpressionToReachItem(impression) {
+    return {
+        post_impressions: [{ value: impression.total.toString(), timestamp: impression.timestamp }],
+        post_impressions_organic: [{ value: impression.organic.toString(), timestamp: impression.timestamp }],
+        post_impressions_viral: [{ value: impression.viral.toString(), timestamp: impression.timestamp }],
+        post_impressions_paid: [{ value: impression.paid.toString(), timestamp: impression.timestamp }]
+    }
 }
 
 module.exports = Repository;

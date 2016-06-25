@@ -6,6 +6,8 @@ var createdPublishingItemEvent = 'created_publishing_item';
 var updatedPublishingItemEvent = 'updated_publishing_item';
 var deletedPublishingItemEvent = 'deleted_publishing_item';
 
+var createdImpressionEvent = 'created_impression';
+
 /**
  * Handles websocket communication.
  */
@@ -54,6 +56,14 @@ class SocketService {
      */
     emitDeletedPublishingItem(id) {
         publishNamespace.emit(deletedPublishingItemEvent, id);
+    }
+
+    /**
+     * Emits the created impression to all connected clients.
+     * @param impression - The new impression data.
+     */
+    emitCreatedImpression(impression) {
+        reachNamespace.emit(createdImpressionEvent, impression);
     }
 }
 

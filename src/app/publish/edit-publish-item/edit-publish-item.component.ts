@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { PublishingItemsService } from '../shared/publishing-items.service';
-import { PublishingItem } from '../shared/publishing-item';
+import { PublishingItemsService, PublishingItem } from '../shared/index';
 
 declare var componentHandler: any;
 

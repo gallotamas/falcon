@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
-import * as io from 'socket.io-client';
-import { PublishingItem } from './publishing-item';
+import { PublishingItem } from './index';
+import { SocketService } from '../../shared/index';
 
 @Injectable()
 export class PublishSocketService {
@@ -9,25 +9,22 @@ export class PublishSocketService {
     private static updatedPublishingItemEvent = 'updated_publishing_item';
     private static deletedPublishingItemEvent = 'deleted_publishing_item';
 
-    private _host: string = window.location.protocol + '//' + window.location.hostname + ':' + window.location.port;
     private _socket: SocketIOClient.Socket;
 
-    constructor() {}
-
-    public connect(ns = '') {
-        let connectUri = this._host + ns;
-        this._socket = io.connect(connectUri);
-        this._socket.on('connect', () => console.log(`Connected to '${connectUri}'`));
-        this._socket.on('disconnect', () => console.log(`Disconnected from '${connectUri}'`));
-        this._socket.on('error', (error: string) => {
-            console.log(`An error occured during websocket communication: '${error}'`);
-        });
+    constructor(private _socketService: SocketService) {
+        this._socket = this._socketService.connect('/publish');
     }
 
+    /**
+     * Closes the websocket connection to the server.
+     */
     public disconnect() {
-        this._socket.close();
+        this._socketService.disconnect(this._socket);
     }
 
+    /**
+     * Retrieves a data stream for "create" events.
+     */
     public created(): Observable<PublishingItem> {
         // Return observable which follows "create" signals from the socket stream.
         return Observable.create((observer: any) => {
@@ -36,6 +33,9 @@ export class PublishSocketService {
         });
     }
 
+    /**
+     * Retrieves a data stream for "update" events.
+     */
     public updated(): Observable<PublishingItem> {
         // Return observable which follows "update" signals from the socket stream.
         return Observable.create((observer: any) => {
@@ -44,6 +44,9 @@ export class PublishSocketService {
         });
     }
 
+    /**
+     * Retrieves a data stream for "delete" events.
+     */
     public deleted(): Observable<string> {
         // Return observable which follows "delete" signals from the socket stream.
         return Observable.create((observer: any) => {

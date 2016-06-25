@@ -25,6 +25,7 @@
     "@angular/router": "3.0.0-alpha.3",
     "body-parser": "^1.15.1",
     "cookie-parser": "^1.4.3",
+    "d3": "^3.5.17",
     "es6-shim": "0.35.1",
     "express": "^4.14.0",
     "lodash": "^4.13.1",

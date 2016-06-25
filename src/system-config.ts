@@ -7,8 +7,9 @@
  **********************************************************************************************/
 /** Map relative paths to URLs. */
 const map: any = {
-  'socket.io-client': 'socket.io/socket.io.js',
-  'lodash': 'vendor/lodash/lodash.min.js'
+  'socket.io-client': 'socket.io/socket.io.js', // socket.io serves the client lib automatically
+  'lodash': 'vendor/lodash/lodash.min.js',
+  'd3': 'vendor/d3/d3.min.js'
 };
 
 /** User packages configuration. */
@@ -34,11 +35,11 @@ const barrels: string[] = [
 
   // App specific barrels.
   'app',
-  'app/shared',
   'app/publish',
   'app/publish/publish-list',
   'app/publish/publish-card',
   'app/publish/edit-publish-item',
+  'app/reach',
   /** @cli-barrel */
 ];
 

@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ROUTER_DIRECTIVES } from '@angular/router';
-import { PublishingItemsService } from '../shared/publishing-items.service';
-import { PublishingItem } from '../shared/publishing-item';
+import { PublishingItemsService, PublishingItem } from '../shared/index';
 
 @Component({
   moduleId: module.id,

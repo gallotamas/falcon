@@ -1,1 +1,1 @@
-
+export * from './publish.routes';

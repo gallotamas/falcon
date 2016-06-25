@@ -5,6 +5,7 @@
     "selenium-webdriver": "registry:dt/selenium-webdriver#2.44.0+20160317120654"
   },
   "ambientDependencies": {
+    "d3": "registry:dt/d3#0.0.0+20160620220125",
     "es6-shim": "registry:dt/es6-shim#0.31.2+20160317120654",
     "lodash": "registry:dt/lodash#3.10.0+20160619033623",
     "socket.io-client": "registry:dt/socket.io-client#1.4.4+20160317120654"

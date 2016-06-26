@@ -19,7 +19,7 @@ Alternatively you can just run `npm install` and `npm start` to install and run 
 
 The application will start on http://localhost:3000
 
-## Tools & Technologies
+## Tools & Technologies used
 
 - [angular-cli](https://github.com/angular/angular-cli) for generating the project and file templates.
 - [Visual Studio Code](https://code.visualstudio.com/) as IDE.
@@ -40,7 +40,7 @@ but currently there is an [issue](https://github.com/angular/angular-cli/issues/
 
 ## Improvements possibilities
 
-- Write tests. :simple_smile:
+- Write tests. :)
 - Use a spinner when there is a data loading activity in the background.
 - Validation (it was not required).
 - Improve reach graph.

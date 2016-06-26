@@ -5,6 +5,11 @@
   <div class="mdl-card__supporting-text">
     {{publishingItem.content.message}}
   </div>
+  <div class="publish-tags">
+    <span *ngFor="let tag of publishingItem.tags" class="tag mdl-color--primary">
+      {{tag}}
+    </span>
+  </div>
   <div class="mdl-card__actions mdl-card--border">
     <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
       [routerLink]="['/publish', publishingItem.id]">

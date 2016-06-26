@@ -1,33 +1,47 @@
-# Falcon
+# Falcon test
 
-This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.6.
+Test application for falcon.io to demonstrate a few concepts (REST, websockets, data visualization).
+All requested features are implemeted.
 
-## Development server
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Quick start
+``` bash
+# install dependencies
+npm install
 
-## Code scaffolding
+# build the project using angular-cli
+npm run build
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive/pipe/service/route/class`.
+# run the server
+node app.js
+```
 
-## Build
+Alternatively you can just run `npm install` and `npm start` to install and run the application.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+The application will start on http://localhost:3000
 
-## Running unit tests
+## Tools & Technologies
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-`ng test` doesn't work on Windows, but there is a workaround to this issue. See: https://github.com/angular/angular-cli/issues/977.
-Use `npm test` instead.
+- [angular-cli](https://github.com/angular/angular-cli) for generating the project and file templates.
+- [Visual Studio Code](https://code.visualstudio.com/) as IDE.
+- [Angular 2](https://angular.io/) as client side framework.
+- [TypeScript](https://www.typescriptlang.org/) as programming language of the frontend.
+- [express](http://expressjs.com/) as server side framework.
+- [socket.io](http://socket.io/) for easy websocket communication.
+- [Material Design Lite](https://getmdl.io/) for user interface components (it is loaded from CDN).
+- [d3.js](https://d3js.org/) for data visualization.
+- [less](http://lesscss.org/) for stylesheets.
 
-## Running end-to-end tests
+## Remarks
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/). 
-Before running the tests make sure you are serving the app via `ng serve`.
+The application was optimized for Chrome an Firefox.
 
-## Deploying to Github Pages
+Normally, you could use `npm run build-prod` for building the production version of the app
+but currently there is an [issue](https://github.com/angular/angular-cli/issues/1068) in angular-cli with `ng build -prod` that causes the production build to fail.
 
-Run `ng github-pages:deploy` to deploy to Github Pages.
+## Improvements possibilities
 
-## Further help
-
-To get more help on the `angular-cli` use `ng --help` or go check out the [Angular-CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+- Write tests. :simple_smile:
+- Use a spinner when there is a data loading activity in the background.
+- Validation (it was not required).
+- Improve reach graph.
+- Make more properties editable on the edit publishing item page. 

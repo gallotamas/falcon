@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { PublishingItemsService, PublishingItem } from '../shared/index';
 
@@ -10,7 +10,7 @@ declare var componentHandler: any;
   templateUrl: 'edit-publish-item.component.html',
   styleUrls: ['edit-publish-item.component.css']
 })
-export class EditPublishItemComponent implements OnInit, OnDestroy {
+export class EditPublishItemComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private _routeParamSubscription;
 
@@ -18,6 +18,20 @@ export class EditPublishItemComponent implements OnInit, OnDestroy {
 
   // empty object is required for proper data binding.
   publishingItem = PublishingItem.createEmptyObject();
+
+  public get tags(): string {
+    return this.publishingItem.tags ? this.publishingItem.tags.join(' ') : '';
+  }
+  public set tags(value: string) {
+    this.publishingItem.tags = _.filter(value.split(' '), item => item.trim() !== '');
+  }
+
+  networks = [
+    { id: 'facebook', name: 'Facebook' },
+    { id: 'twitter', name: 'Twitter' },
+    { id: 'linkedin', name: 'LinkedIn' },
+    { id: 'instagram', name: 'Instagram' }
+  ];
 
   constructor(
     private _router: Router,
@@ -38,6 +52,12 @@ export class EditPublishItemComponent implements OnInit, OnDestroy {
         .subscribe(publishingItem => this.publishingItem = publishingItem);
       }
    });
+  }
+
+  ngAfterViewInit() {
+    // init material design lite components.
+    // NOTE: the radio buttons are created in an ngFor so we have do this after the view init.
+    componentHandler.upgradeDom();
   }
 
   ngOnDestroy() {
